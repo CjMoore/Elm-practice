@@ -233,13 +233,72 @@ mapFirst2 f list =
       []
     x::tail ->
       [(f x)] ++ mapFirst2 f tail
-      
+
+mapTwo1 : (a -> b -> result) -> List a -> List b -> List result
+mapTwo1 f list1 list2 =
+  List.foldl (\item newTuple -> let
+                                  item2 = Array.get (Tuple.second newTuple) (Array.fromList list2)
+                                in
+                                  case item2 of
+                                    Just num ->
+                                      ((Tuple.first newTuple) ++ [(f item num)]
+                                      , ((Tuple.second newTuple + 1)))
+                                    Nothing ->
+                                      newTuple
+            ) ([], 0) list1
+
+             |> Tuple.first
+
+
+mapTwo2 : (a -> b -> result) -> List a -> List b -> List result
+mapTwo2 f list1 list2 =
+  case (list1, list2) of
+    ([], []) ->
+      []
+    (x::tail1, y::tail2) ->
+      [f x y] ++ (mapTwo2 f tail1 tail2)
+    _ ->
+      []
+
+filterMap1 : (a -> Maybe b) -> List a -> List b
+filterMap1 f list1 =
+  List.foldl (\item newList->
+    let
+      num = f item
+    in
+      case num of
+        Just n ->
+          newList ++ [n]
+        Nothing ->
+          newList
+    ) [] list1
+
+
+filterMap2 : (a -> Maybe b) -> List a -> List b
+filterMap2 f list1 =
+  case list1 of
+    [] ->
+      []
+    x::tail ->
+      let
+        num = f x
+      in
+        case num of
+          Just n ->
+            [n] ++ filterMap2 f tail
+          Nothing ->
+            filterMap2 f tail
  
 output = 
   mapFirst2 timesTwo list1
   
   
   
+  
+add : Int -> Int -> Int
+add num1 num2 = 
+  num1 + num2
+
 timesTwo : Int -> Int
 timesTwo num = 
   num * 2
