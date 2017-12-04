@@ -1,0 +1,560 @@
+var _user$project$Main$timesTwo = function (num) {
+	return num * 2;
+};
+var _user$project$Main$mapFirst2 = F2(
+	function (f, list) {
+		var _p0 = list;
+		if (_p0.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: f(_p0._0),
+					_1: {ctor: '[]'}
+				},
+				A2(_user$project$Main$mapFirst2, f, _p0._1));
+		}
+	});
+var _user$project$Main$map1 = F2(
+	function (f, list) {
+		return A3(
+			_elm_lang$core$List$foldr,
+			F2(
+				function (item, newList) {
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						{
+							ctor: '::',
+							_0: f(item),
+							_1: {ctor: '[]'}
+						},
+						newList);
+				}),
+			{ctor: '[]'},
+			list);
+	});
+var _user$project$Main$unzip2 = function (list) {
+	var _p1 = list;
+	if (_p1.ctor === '[]') {
+		return {
+			ctor: '_Tuple2',
+			_0: {ctor: '[]'},
+			_1: {ctor: '[]'}
+		};
+	} else {
+		var _p3 = _p1._0;
+		var _p2 = _user$project$Main$unzip2(_p1._1);
+		var firstPart = _p2._0;
+		var secondPart = _p2._1;
+		return {
+			ctor: '_Tuple2',
+			_0: A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _elm_lang$core$Tuple$first(_p3),
+					_1: {ctor: '[]'}
+				},
+				firstPart),
+			_1: A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _elm_lang$core$Tuple$second(_p3),
+					_1: {ctor: '[]'}
+				},
+				secondPart)
+		};
+	}
+};
+var _user$project$Main$unzip1 = function (list) {
+	return A3(
+		_elm_lang$core$List$foldl,
+		F2(
+			function (item, newTuple) {
+				return {
+					ctor: '_Tuple2',
+					_0: A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Tuple$first(newTuple),
+						{
+							ctor: '::',
+							_0: _elm_lang$core$Tuple$first(item),
+							_1: {ctor: '[]'}
+						}),
+					_1: A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Tuple$second(newTuple),
+						{
+							ctor: '::',
+							_0: _elm_lang$core$Tuple$second(item),
+							_1: {ctor: '[]'}
+						})
+				};
+			}),
+		{
+			ctor: '_Tuple2',
+			_0: {ctor: '[]'},
+			_1: {ctor: '[]'}
+		},
+		list);
+};
+var _user$project$Main$partition2 = F2(
+	function (f, list) {
+		var _p4 = list;
+		if (_p4.ctor === '[]') {
+			return {
+				ctor: '_Tuple2',
+				_0: {ctor: '[]'},
+				_1: {ctor: '[]'}
+			};
+		} else {
+			var _p6 = _p4._0;
+			var _p5 = A2(_user$project$Main$partition2, f, _p4._1);
+			var trueInTail = _p5._0;
+			var falseInTail = _p5._1;
+			return f(_p6) ? {
+				ctor: '_Tuple2',
+				_0: A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: _p6,
+						_1: {ctor: '[]'}
+					},
+					trueInTail),
+				_1: falseInTail
+			} : {
+				ctor: '_Tuple2',
+				_0: trueInTail,
+				_1: A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: _p6,
+						_1: {ctor: '[]'}
+					},
+					falseInTail)
+			};
+		}
+	});
+var _user$project$Main$partition1 = F2(
+	function (f, list) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (item, newTuple) {
+					return f(item) ? {
+						ctor: '_Tuple2',
+						_0: A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Tuple$first(newTuple),
+							{
+								ctor: '::',
+								_0: item,
+								_1: {ctor: '[]'}
+							}),
+						_1: _elm_lang$core$Tuple$second(newTuple)
+					} : {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Tuple$first(newTuple),
+						_1: A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Tuple$second(newTuple),
+							{
+								ctor: '::',
+								_0: item,
+								_1: {ctor: '[]'}
+							})
+					};
+				}),
+			{
+				ctor: '_Tuple2',
+				_0: {ctor: '[]'},
+				_1: {ctor: '[]'}
+			},
+			list);
+	});
+var _user$project$Main$intersperse2 = F2(
+	function (addThis, list) {
+		var _p7 = list;
+		if (_p7.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _p7._0,
+					_1: {ctor: '[]'}
+				},
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: addThis,
+						_1: {ctor: '[]'}
+					},
+					A2(_user$project$Main$intersperse2, addThis, _p7._1)));
+		}
+	});
+var _user$project$Main$intersperse1 = F2(
+	function (newThing, list) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (item, newList) {
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						newList,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							{
+								ctor: '::',
+								_0: item,
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: newThing,
+								_1: {ctor: '[]'}
+							}));
+				}),
+			{ctor: '[]'},
+			list);
+	});
+var _user$project$Main_ops = _user$project$Main_ops || {};
+_user$project$Main_ops['+++'] = F2(
+	function (listOne, listTwo) {
+		var _p8 = listOne;
+		if (_p8.ctor === '[]') {
+			return listTwo;
+		} else {
+			return A2(
+				F2(
+					function (x, y) {
+						return {ctor: '::', _0: x, _1: y};
+					}),
+				_p8._0,
+				A2(
+					F2(
+						function (x, y) {
+							return A2(_user$project$Main_ops['+++'], x, y);
+						}),
+					_p8._1,
+					listTwo));
+		}
+	});
+var _user$project$Main$concat2 = function (listOfLists) {
+	var _p9 = listOfLists;
+	if (_p9.ctor === '[]') {
+		return {ctor: '[]'};
+	} else {
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			_p9._0,
+			_user$project$Main$concat2(_p9._1));
+	}
+};
+var _user$project$Main$concat = function (listOfLists) {
+	return A3(
+		_elm_lang$core$List$foldl,
+		F2(
+			function (item, list) {
+				return A2(_elm_lang$core$Basics_ops['++'], list, item);
+			}),
+		{ctor: '[]'},
+		listOfLists);
+};
+var _user$project$Main$drop2 = F2(
+	function (num, list) {
+		drop2:
+		while (true) {
+			var _p10 = list;
+			if (_p10.ctor === '[]') {
+				return {ctor: '[]'};
+			} else {
+				if (_elm_lang$core$Native_Utils.eq(num, 0)) {
+					return list;
+				} else {
+					var _v7 = num - 1,
+						_v8 = _p10._1;
+					num = _v7;
+					list = _v8;
+					continue drop2;
+				}
+			}
+		}
+	});
+var _user$project$Main$drop1 = F2(
+	function (num, list) {
+		return _elm_lang$core$Tuple$first(
+			A3(
+				_elm_lang$core$List$foldl,
+				F2(
+					function (item, listTuple) {
+						return (_elm_lang$core$Native_Utils.cmp(
+							_elm_lang$core$Tuple$second(listTuple),
+							num) < 0) ? {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Tuple$first(listTuple),
+							_1: 1 + _elm_lang$core$Tuple$second(listTuple)
+						} : {
+							ctor: '_Tuple2',
+							_0: A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Tuple$first(listTuple),
+								{
+									ctor: '::',
+									_0: item,
+									_1: {ctor: '[]'}
+								}),
+							_1: num
+						};
+					}),
+				{
+					ctor: '_Tuple2',
+					_0: {ctor: '[]'},
+					_1: 0
+				},
+				list));
+	});
+var _user$project$Main$take3 = F2(
+	function (num, list) {
+		return _elm_lang$core$Tuple$first(
+			A3(
+				_elm_lang$core$List$foldl,
+				F2(
+					function (item, listTuple) {
+						return _elm_lang$core$Native_Utils.eq(
+							_elm_lang$core$Tuple$second(listTuple),
+							0) ? {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Tuple$first(listTuple),
+							_1: 0
+						} : {
+							ctor: '_Tuple2',
+							_0: A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Tuple$first(listTuple),
+								{
+									ctor: '::',
+									_0: item,
+									_1: {ctor: '[]'}
+								}),
+							_1: _elm_lang$core$Tuple$second(listTuple) - 1
+						};
+					}),
+				{
+					ctor: '_Tuple2',
+					_0: {ctor: '[]'},
+					_1: num
+				},
+				list));
+	});
+var _user$project$Main$take2 = F2(
+	function (num, list) {
+		var _p11 = list;
+		if (_p11.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			return _elm_lang$core$Native_Utils.eq(num, 0) ? {ctor: '[]'} : A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _p11._0,
+					_1: {ctor: '[]'}
+				},
+				A2(_user$project$Main$take2, num - 1, _p11._1));
+		}
+	});
+var _user$project$Main$take1 = F2(
+	function (num, list) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (item, newList) {
+					return (_elm_lang$core$Native_Utils.cmp(
+						_elm_lang$core$List$length(newList),
+						num) < 0) ? A2(
+						_elm_lang$core$Basics_ops['++'],
+						newList,
+						{
+							ctor: '::',
+							_0: item,
+							_1: {ctor: '[]'}
+						}) : newList;
+				}),
+			{ctor: '[]'},
+			list);
+	});
+var _user$project$Main$isEven = function (num) {
+	return _elm_lang$core$Native_Utils.eq(
+		A2(_elm_lang$core$Basics_ops['%'], num, 2),
+		0);
+};
+var _user$project$Main$filter2 = F2(
+	function (f, list) {
+		filter2:
+		while (true) {
+			var _p12 = list;
+			if (_p12.ctor === '[]') {
+				return {ctor: '[]'};
+			} else {
+				var _p14 = _p12._0;
+				var _p13 = _p12._1;
+				if (f(_p14)) {
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						A2(_user$project$Main$filter2, f, _p13),
+						{
+							ctor: '::',
+							_0: _p14,
+							_1: {ctor: '[]'}
+						});
+				} else {
+					var _v11 = f,
+						_v12 = _p13;
+					f = _v11;
+					list = _v12;
+					continue filter2;
+				}
+			}
+		}
+	});
+var _user$project$Main$filter1 = F2(
+	function (f, list) {
+		return A3(
+			_elm_lang$core$List$foldr,
+			F2(
+				function (item, newList) {
+					return f(item) ? A2(
+						_elm_lang$core$Basics_ops['++'],
+						newList,
+						{
+							ctor: '::',
+							_0: item,
+							_1: {ctor: '[]'}
+						}) : newList;
+				}),
+			{ctor: '[]'},
+			list);
+	});
+var _user$project$Main$tail = function (list) {
+	var _p15 = list;
+	if (_p15.ctor === '[]') {
+		return _elm_lang$core$Maybe$Nothing;
+	} else {
+		return _elm_lang$core$Maybe$Just(_p15._1);
+	}
+};
+var _user$project$Main$head = function (list) {
+	var _p16 = list;
+	if (_p16.ctor === '[]') {
+		return _elm_lang$core$Maybe$Nothing;
+	} else {
+		return _elm_lang$core$Maybe$Just(_p16._0);
+	}
+};
+var _user$project$Main$member2 = F2(
+	function (list, isIncluded) {
+		member2:
+		while (true) {
+			var _p17 = list;
+			if (_p17.ctor === '[]') {
+				return false;
+			} else {
+				if (_elm_lang$core$Native_Utils.eq(_p17._0, isIncluded)) {
+					return true;
+				} else {
+					var _v16 = _p17._1,
+						_v17 = isIncluded;
+					list = _v16;
+					isIncluded = _v17;
+					continue member2;
+				}
+			}
+		}
+	});
+var _user$project$Main$member1 = F2(
+	function (list, member) {
+		return A3(
+			_elm_lang$core$List$foldr,
+			F2(
+				function (item, bool) {
+					return _elm_lang$core$Native_Utils.eq(item, member) ? true : bool;
+				}),
+			false,
+			list);
+	});
+var _user$project$Main$reverse2 = function (list) {
+	var _p18 = list;
+	if (_p18.ctor === '[]') {
+		return {ctor: '[]'};
+	} else {
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			_user$project$Main$reverse2(_p18._1),
+			{
+				ctor: '::',
+				_0: _p18._0,
+				_1: {ctor: '[]'}
+			});
+	}
+};
+var _user$project$Main$reverse1 = function (list) {
+	return A3(
+		_elm_lang$core$List$foldl,
+		F2(
+			function (x, y) {
+				return {ctor: '::', _0: x, _1: y};
+			}),
+		{ctor: '[]'},
+		list);
+};
+var _user$project$Main$length = function (list) {
+	var _p19 = list;
+	if (_p19.ctor === '[]') {
+		return 0;
+	} else {
+		return 1 + _user$project$Main$length(_p19._1);
+	}
+};
+var _user$project$Main$isEmpty = function (list) {
+	return A3(
+		_elm_lang$core$List$foldr,
+		F2(
+			function (item, bool) {
+				return false;
+			}),
+		true,
+		list);
+};
+var _user$project$Main$list2 = {ctor: '[]'};
+var _user$project$Main$list1 = {
+	ctor: '::',
+	_0: 1,
+	_1: {
+		ctor: '::',
+		_0: 2,
+		_1: {
+			ctor: '::',
+			_0: 3,
+			_1: {
+				ctor: '::',
+				_0: 4,
+				_1: {
+					ctor: '::',
+					_0: 5,
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	}
+};
+var _user$project$Main$output = A2(_user$project$Main$mapFirst2, _user$project$Main$timesTwo, _user$project$Main$list1);
+var _user$project$Main$main = _elm_lang$virtual_dom$Native_VirtualDom.staticProgram(
+	_elm_lang$html$Html$text(
+		_elm_lang$core$Basics$toString(_user$project$Main$output)));
