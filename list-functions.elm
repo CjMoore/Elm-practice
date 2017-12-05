@@ -303,6 +303,19 @@ sum2 list =
     x::tail ->
       x + (sum2 tail)
 
+product1 : List number -> number
+product1 list = 
+  List.foldl (\item num -> item * num) 1 list
+  
+  
+product2 : List number -> number
+product2 list = 
+  case list of 
+    [] ->
+      1
+    x::tail ->
+      x * (product2 tail)
+
 
 output = 
   sum2 list1
