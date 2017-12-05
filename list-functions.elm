@@ -288,9 +288,24 @@ filterMap2 f list1 =
             [n] ++ filterMap2 f tail
           Nothing ->
             filterMap2 f tail
+
  
+sum1 : List number -> number
+sum1 list =
+  List.foldl (\item num -> num + item) 0 list
+  
+  
+sum2 : List number -> number
+sum2 list = 
+  case list of 
+    [] ->
+      0
+    x::tail ->
+      x + (sum2 tail)
+
+
 output = 
-  mapFirst2 timesTwo list1
+  sum2 list1
   
   
   
