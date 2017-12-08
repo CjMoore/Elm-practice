@@ -316,6 +316,34 @@ product2 list =
     x::tail ->
       x * (product2 tail)
 
+maximum1 : List comparable -> Maybe comparable
+maximum1 list =
+  List.foldl 
+    (\item  max -> 
+        max
+        |> Maybe.map
+          (\max -> 
+              if item > max then
+                item
+              else
+                max
+          )       
+    ) (List.head list) list   
+    
+minimum1 : List comparable -> Maybe comparable
+minimum1 list = 
+  List.foldl
+    (\item min ->
+      min
+        |> Maybe.map
+            (\min -> 
+                if item < min then
+                  item
+                else
+                  min
+            ) 
+    ) (List.head list) list   
+
 
 output = 
   sum2 list1
