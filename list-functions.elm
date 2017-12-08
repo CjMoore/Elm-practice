@@ -345,6 +345,51 @@ minimum1 list =
     ) (List.head list) list   
 
 
+any1 : (a -> Bool) -> List a -> Bool
+any1 f list = 
+ List.foldl (\item bool ->
+               if f item then
+                 True
+               else
+                 bool
+            ) False list     
+            
+any2 : (a -> Bool) -> List a -> Bool
+any2 f list = 
+  case list of
+    [] ->
+      False
+    x::tail ->
+      if (f x) then
+        True
+      else
+        any2 f tail
+        
+        
+all1 : (a -> Bool) -> List a -> Bool
+all1 f list = 
+  List.foldl (\item bool -> 
+                 if (f item) && bool then
+                   True
+                 else
+                   False
+             ) True list 
+              
+     
+              
+all2 : (a -> Bool) -> List a -> Bool
+all2 f list =
+  case list of 
+    [] ->
+      True
+    x::tail ->
+      if (f x) then
+        all2 f tail
+      else
+        False
+      
+
+
 output = 
   sum2 list1
   
